@@ -5,14 +5,14 @@ function userInformationHTML(user) {
                 (@<a href="${user.html_url}" target="_blank">${user.login}</a>)
             </span>
         </h2>
-        <div class="gh-content>
+        <div class="gh-content">
             <div class="gh-avatar">
                 <a href="${user.html_url}" target="_blank">
-                    <img src="${user.avatar_url}" width="80" heigh="80" alt="${user.login}" />
+                    <img src="${user.avatar_url}" width="80" height="80" alt="${user.login}" />
                 </a>
             </div>
-            <p>Followers: ${user.followers} - Following ${user.following} </br> Repos: ${user.public_repos}</p>
-        </div>`
+            <p>Followers: ${user.followers} - Following ${user.following} <br> Repos: ${user.public_repos}</p>
+        </div>`;
 }
 
 
@@ -40,6 +40,8 @@ function repoInformationHTML(repos) {
 }
 
 function fetchGitHubInformation(event) {
+    $("#gh-user-data").html("");
+    $("#gh-repo-data").html("");
 
     var username = $("#gh-username").val();
     if (!username) {
@@ -60,7 +62,7 @@ function fetchGitHubInformation(event) {
             var userData = firstResponse[0];
             var repoData = secondResponse[0];
             $("#gh-user-data").html(userInformationHTML(userData));
-            $("#gh-user-data").html(repoInformationHTML(repoData));
+            $("#gh-repo-data").html(repoInformationHTML(repoData));
         },
         function (errorResponse) {
             if (errorResponse.status === 404) {
@@ -73,3 +75,5 @@ function fetchGitHubInformation(event) {
         }
     )
 }
+
+$(document).ready(fetchGitHubInformation);
